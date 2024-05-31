@@ -1,0 +1,97 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta content="Jeux Olympiques Paris 2024 - Billeterie">
+  <title> JO Paris 2024 - {{ title }} </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="shortcut icon" href="{% static 'app/img/base/favicon.ico' type="image/x-icon" %}"/>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'app/css/styles.css' %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/htmx.org@1.6.0/dist/htmx.min.js"></script>
+  <body>
+    <header>
+      <div class="banner">
+        <a class="logo-wrapper" href="{% url 'home_view' %}">
+          <img class="olympics-logo" src="{% static 'app/img/base/jo-logo.jpeg' %}" alt="Logo" title="Logo">
+          <h1>Paris 2024</h1>
+        </a>
+      </div>
+      <nav class="navbar navbar-expand-lg ">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link offer-link" href="{% url 'offers_view' %}" alt="Offres">
+                Offres
+              </a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'cart_view' %}" alt="Panier">
+                Panier
+              </a>
+            </li>
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'user_account_view' %}">
+                  <i class="fa-solid fa-user"></i>
+                  Mon compte
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Se déconnecter</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'signin_view' %}">Se connecter</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'signup_view' %}">S'inscrire</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+    </header>
+  {% block main %}{% endblock %}
+  {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+  <footer class="bg-light text-center text-lg-start">
+    <div class="container p-4">
+        <div class="d-flex justify-content-around">
+            <div>
+                <a href="{% url 'legal_view' %}" class="text-dark">Mentions légales</a>
+            </div>
+            <div>
+                <h5>&copy; Tous droits réservés</h5>
+            </div>
+            <div>
+                <h5>Site web réalisé par Julie Dessart</h5>
+            </div>
+        </div>
+    </div>
+</footer>
+  <script src="{% static 'app/js/checkid-process.js' %}"></script> 
+  <script src="{% static 'app/js/add-to-cart.js' %}"></script>    
+</body>
+</html>

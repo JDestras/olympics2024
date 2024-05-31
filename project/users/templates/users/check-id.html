@@ -1,0 +1,43 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block main %}
+
+<main class="page-title checkidpage container mt-5">
+    <h2>{{ title }}</h2>
+    <section>
+        <h3 class="process-rule">Veuillez vous placer devant la caméra et présenter votre pièce d'identité</h3>
+        <video id="camera" width="640" height="480" autoplay></video>
+        <script>
+            var video = document.getElementById('camera');
+            // Demander l'accès à la caméra
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                    video.srcObject = stream;
+                    video.play();
+                });
+            }
+        </script>
+    </section>
+    <form method="post">
+        {% csrf_token %}
+        <button type="button" class="pay-btn btn btn-primary" id="verifyButton">Lancer la vérification</button>
+    </form>
+    <div class="three-dots" style="display:none;">
+        <div class="dot">.</div>
+        <div class="dot">.</div>
+        <div class="dot">.</div>
+    </div>
+    <div class="check-ok" style="display:none;">
+        <p>Identité vérifiée</p>
+        <i class="fa-solid fa-check fa-beat"></i>
+        <form id="verificationForm" method="post">
+            {% csrf_token %}
+            <input type="hidden" id="verificationResult" name="verification_result" value="">
+            <a href="{% url 'sendActivationEmail' user_id=user_id to_email=user_email %}">Poursuivre</a>
+        </form>
+    </div>
+</main>
+<script src="{% static 'app/js/checkid-process.js' %}"></script>
+{% endblock %}
+
+

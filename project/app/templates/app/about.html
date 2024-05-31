@@ -1,0 +1,28 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block main %}
+
+<main class="about-page container mt-5">
+    <h1 class="text-center mb-5">{{ title }}</h1>
+    <section class="row">
+        {% for about in about %}
+            <article class="col-md-6 mb-4">
+                <div class="card">
+                    {% if about.image %}
+                        <img src="{{ about.image.url }}" 
+                            class="card-img-top" 
+                            alt="{{ about.image_description }} - {{ about.image_credit }}" 
+                            title="{{ about.image_description }} - {{ about.image_credit }}">
+                    {% else %}
+                        <img src="{% static 'app/img/base/default.jpg' %}" class="card-img-top" alt="Image non disponible">
+                    {% endif %}
+                    <div class="card-body">
+                        <p class="card-text">{{ about.text }}</p>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+</main>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+<div id="carouselExample" class="carousel slide carousel-custom" data-ride="carousel">
+    <div class="carousel-inner">
+        {% for about in abouts %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <div class="car-div row no-gutters">
+                <div class="col-lg-8 col-md-12 mb-3 mb-lg-0">
+                    <img src="{{ about.image.url }}" class="d-block w-100" alt="{{ about.name }} - {{ about.image_description }} - Crédit: {{ about.image_credit }}">
+                </div>
+                <div class="car-txt col-lg-4 col-md-12">
+                    <div class="carousel-caption">
+                        <h3>{{ about.name }}</h3>
+                        <p>{{ about.text }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Précédent</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Suivant</span>
+    </a>
+</div>

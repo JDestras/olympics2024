@@ -1,0 +1,63 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block main %}
+
+<main class="page-title orderpage container mt-5">
+    <h2>{{ title }}</h2>
+    <section>
+        {% for legal in legal %}
+            <article class='contact-address'>
+                <h2>Éditeur du site</h2>
+                <div>
+                    <p>{{ legal.editor_name }}</p>
+                    <p>{{ legal.editor_website }}</p>
+                    <p>{{ legal.utilisation }}</p>
+                    <p>SIRET : {{ legal.editor_SIRET }}</p>
+                    <p>CODE APE : {{ legal.editor_APE }}</p>
+                </div>
+            </article>
+            <article class='contact-address'>
+                <h2>Adresse de contact</h2>
+                <div>
+                    <p>{{ legal.location_name }}</p>
+                    <p>{{ legal.street_nb }}, {{ legal.street }}</p>
+                    <p>{{ legal.zip_code }} - {{ legal.city }}</p>
+                </div>
+            </article>
+            <article class="contact-phone">
+                <p>{{ legal.phone_number }}</p>
+            </article>
+            <article>
+                {% if legal.email %}
+                    <p>{{ legal.email }}</p>
+                {% endif %} 
+            </article>
+            <article class='contact-address'>
+                <h2>Hébergement du site</h2>
+                <div>
+                    <p>{{ legal.host_name }}</p>
+                    <p>{{ legal.host_address }}
+                    <p>{{ legal.host_website }}</p>
+                    <p>{{ legal.host_complement }}</p>
+                </div>
+            </article>
+            </article>
+            <h2>Propriété intellectuelle</h2>
+            <p>{{ legal.text_3 }}</p>
+            <h2>Données personnelles</h2>
+            <p>{{ legal.text_4 }}</p>
+            <h2>Loi applicable</h2>
+            <p>{{ legal.text_5 }}</p>
+            <h2>Modification des mentions légales</h2>
+            <p>{{ legal.text_6 }}</p>
+            <h2>{{ legal.title_7 }}</h2>
+            <p>{{ legal.text_7 }}</p>
+            <h2>{{ legal.title_8 }}</h2>
+            <p>{{ legal.text_8 }}</p>
+            <h2>{{ legal.title_9 }}</h2>
+            <p>{{ legal.text_9 }}</p>
+        {% endfor %}
+    </section>
+</main>
+
+{% endblock %}

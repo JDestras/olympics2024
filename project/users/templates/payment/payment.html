@@ -1,0 +1,15 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block main %}
+<main class="page-title paypage container mt-5">
+    <h2>{{ title }}</h2>
+    <div class="payment-summary">
+        <h5>Montant à régler : {{ total_price }}€</h5>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="pay-btn btn btn-primary">Payer</button>
+    </form>
+</main>
+{% endblock %}

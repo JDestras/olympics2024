@@ -1,0 +1,18 @@
+{% extends "app/base.html" %}
+{% load crispy_forms_tags %}
+{% block main %}
+<main class="page-title signpage container mt-5">
+    <h2>{{ title }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Se connecter</button>
+    </form>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Vous possédez déjà un compte? <a class="ml-2" href="{% url 'signin_view' %}">S'identifier</a>
+        </small><br>
+    </div>
+</main>
+{% endblock main %}
+

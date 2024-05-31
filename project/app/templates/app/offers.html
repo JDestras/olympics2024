@@ -1,0 +1,27 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block main %}
+<main class="page-title container mt-5">
+    <h2>{{ title }}</h2>
+    <section class="row">
+        {% for offer in offers %}
+            <article class="col-md-4 mb-4">
+                <div class="offer-card">
+                    <span class="offer-name">{{ offer.name }}</span>
+                    <p class="offer-description">{{ offer.description }}</p>
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+    <section class= "event-form">
+        <form id="filter-form" method="get">
+            {{ form.as_p }}
+        </form>
+        <div id="event-list" class="row">
+            {% include 'app/event-list.html' %}
+        </div>
+    </section>
+</main>
+    <script src="{% static 'app/js/update-events.js' %}"></script>    
+    
+{% endblock %}

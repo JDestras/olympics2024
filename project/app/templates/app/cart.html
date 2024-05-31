@@ -1,0 +1,63 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block main %}
+<main class="page-title container mt-5">
+    <h2>{{ title }}</h2>
+    <div class="cart">
+        <div class="cart-articles">
+            <div id="cart_items"></div>
+            {% if cart %}
+                {% for item in cart %}
+                    <article class="cart-article card event-card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="event-details">
+                                        <p class="event-info">{{ item.event_sport }}, {{ item.event_complete_name }}</p>
+                                        <p class="event-info">{{ item.event_location }}, {{ item.event_time }}</p>
+                                        <p class="event-info">{{ item.offer_name }}</p>
+                                        <p class="event-info">{{ item.adults }} {{ item.adults|pluralize:"adulte,adultes" }}</p>
+                                        <p class="event-info">
+                                            {% if item.children %}
+                                                {{ item.children }} enfant{{ item.children|pluralize:"s" }}
+                                            {% endif %}
+                                        </p>
+                                        <p class="event-info">{{ item.offer_price }} €</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <form action="{% url 'remove_from_cart' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="item_index" value="{{ forloop.counter0 }}">
+                                        <button type="submit" class="suppr-btn btn btn-danger float-end"><i class="fa-solid fa-trash"></i> Supprimer</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+            <div class="total-price">Total à régler : <span id="total-price">{{total_price }}€</span></div>
+            <div class=" cart-buttons col-md-4 text-end">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'payment_view' %}" class="pay-btn btn btn-primary">Procéder au paiement</a>
+                {% else %}
+                    <a href="{% url 'signup_view' %}" class="sign-link" alt="Créer un compte">Créer un compte</a>
+                    <a href="{% url 'signin_view' %}" class="sign-link" alt="Se connecter">Se connecter</a>
+                {% endif %}
+            </div>
+        {% else %}
+            <p>Votre panier est vide.</p>
+        {% endif %}
+        </div>
+        <div class="add-offer text-center mt-3">
+            <a href="{% url 'offers_view' %}" alt="Retour aux offres" title="Ajouter une offre">
+                <i class="fa-solid fa-cart-plus"></i>
+            </a>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+

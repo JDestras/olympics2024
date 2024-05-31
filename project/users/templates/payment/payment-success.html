@@ -1,0 +1,10 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block main %}
+<main class="page-title container mt-5">
+    <section class="section">
+        <div><i class="fa-solid fa-check fa-beat"></i></div>
+        <a href="{% url 'user_account_view' %}">Accéder à ma commande</a>
+    </section>
+</main>
+{% endblock %}

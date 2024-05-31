@@ -1,0 +1,54 @@
+
+    {% for event in events %}
+        <article class="event col-md-4 col-sm-6 mb-4"> 
+            <div class="card event-card h-100">
+                <div class="card-body">
+                    <div class="event-schedule mb-3 text-center">
+                        <span class="day-name d-block font-weight-bold">
+                            {{ event.time|date:"D" }}
+                        </span>
+                        <span class="day-nb d-block display-4">
+                            {{ event.time|date:"d" }}
+                        </span>
+                        <span class="month-name d-block text-uppercase">
+                            {{ event.time|date:"F" }}
+                        </span>
+                        <span class="time-slot d-block">
+                            à {{ event.time|date:"G" }}h{{ event.time|date:"i" }}
+                        </span>
+                    </div>
+                    <div class="event-title text-center mb-3">
+                        <h5 class="event-name h5">
+                            {{ event.complete_name }}
+                        </h5>
+                        <h6 class="event-sport h6">
+                            {{ event.sport }}
+                        </h6>
+                    </div>
+                    <div class="event-location text-center mb-3">
+                        <a href="https://www.google.com/maps/search/?api=1&query={{event.location|urlencode}}"
+                        target="_blank"
+                        title="Localiser avec Google Maps"
+                        alt="Localiser avec Google Maps">
+                            <i class="fa-solid fa-location-dot mr-2"></i>
+                            {{ event.location }}
+                        </a>
+                    </div>
+                    <div class="text-center">
+                        <a class="event-plus btn btn-primary" 
+                           href="{% url 'event_offers_view' event_id=event.id %}" 
+                           alt="Plus d'informations">
+                            Réserver
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </article>
+    {% empty %}
+        <div class="col-12 text-center">
+            <p class="event-item">Aucun événement trouvé.</p>
+        </div>
+    {% endfor %}
+
+
+

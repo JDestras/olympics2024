@@ -1,0 +1,22 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block main %}
+
+<main class="page-title homepage container mt-5">
+    <h2>{{ title }}</h2>
+    <div class="homepage-date">
+        <h4>du 26 juillet au 11 août 2024</h4>
+        {% include 'app/countdown.html' %}
+    </div>
+    <section class="row">
+    {% include 'app/carousel.html' %}
+    </section>
+
+    <h2>Épreuves</h2>
+    <section class="row">
+        {% include 'app/events.html' %}
+    </section>
+</main>
+
+{% endblock %}
+

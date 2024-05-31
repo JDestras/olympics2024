@@ -1,0 +1,96 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block main %}
+<main class="page-title container mt-5">
+    <h2>{{ title }}</h2>
+    <section class="row">
+        {% for offer in offers %}
+            <article class="col-md-4 mb-4">
+                <div class="offer-card">
+                    <span class="offer-name">{{ offer.name }}</span>
+                    <p class="offer-description">{{ offer.description }}</p>
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+    <div class="row">
+        <div class="event col-md-6" id="eventData" data-standard-price="{{ event.standard_price|floatformat }}">
+            <div class="card event-card h-100"> 
+                <div class="card-body">
+                    <div class="event-schedule mb-3 text-center">
+                        <span class="day-name d-block font-weight-bold">
+                            {{ event.time|date:"D" }}
+                        </span>
+                        <span class="day-nb d-block display-4">
+                            {{ event.time|date:"d" }}
+                        </span>
+                        <span class="month-name d-block text-uppercase">
+                            {{ event.time|date:"F" }}
+                        </span>
+                        <span class="time-slot d-block">
+                            à {{ event.time|date:"G" }}h{{ event.time|date:"i" }}
+                        </span>
+                    </div>
+                    <div class="event-title text-center mb-3">
+                        <h5 class="event-name h5">
+                            {{ event.complete_name }}
+                        </h5>
+                        <h6 class="event-sport h6">
+                            {{ event.sport }}
+                        </h6>
+                    </div>
+                    <div class="event-location text-center mb-3">
+                        <i class="fa-solid fa-location-dot mr-2"></i>
+                        {{ event.location }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <form id="offer-form" method="post" action="{% url 'add_to_cart' %}">
+                {% csrf_token %}
+                <input type="hidden" name="event_id" value="{{ event.id }}" id="active_event">
+                <div class="mb-3">
+                    <label for="offer-type" class="form-label">Choisir une offre :</label>
+                    <select class="form-select" id="offer-type" name="offer_id">
+                        {% for offer in offers %}
+                            <option value="{{ offer.id }}"
+                                    data-max-adults="{{ offer.max_adult }}"
+                                    data-min-adults="{{ offer.min_adult }}"
+                                    data-max-children="{{ offer.max_child }}"
+                                    data-min-children="{{ offer.min_child }}"
+                                    data-is-child-offer="{{ offer.with_child }}"
+                                    data-discount-adult="{{ offer.discount_adult|default_if_none:"0" }}"
+                                    data-discount-child="{{ offer.discount_child|default_if_none:"0" }}">
+                                {{ offer.name }} : {{ offer.description }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="adult_nb" class="form-label">Nombre d'adultes :</label>
+                    <input type="number" class="form-control" id="adult_nb">
+                    <input type="hidden" id="adult_ticket" name="adult_ticket">
+                </div>
+                <div class="mb-3">
+                    <label for="child_nb" class="form-label">Nombre d'enfants :</label>
+                    <input type="number" class="form-control" id="child_nb">
+                    <input type="hidden" id="child_ticket" name="child_ticket">
+                </div>
+                <div class="mb-3">
+                    <div id="total_price"><i class="fa-solid fa-tag"></i> <span id="total_price_display"></span></div>
+                </div>
+                <div style="display:none;" id="total_adult_price"></i> <span id="total_adult_price_display"></span></div>
+                <div style="display:none;" id="total_child_price"></i> <span id="total_child_price_display"></span></div>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cart-plus"></i> Ajouter au panier</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<script src="{% static 'app/js/update-offer-fields.js' %}"></script>
+<script src="{% static 'app/js/update-offer-price.js' %}"></script>
+
+{% endblock %}
